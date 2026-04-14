@@ -92,28 +92,26 @@ function nodeShape(type, x, y, node) {
     ? `<text x="${x + w - 10}" y="${y + 16}" text-anchor="end" fill="${p.stroke}" font-family="IBM Plex Mono,monospace" font-size="9" font-weight="700" letter-spacing="1">${cls}</text>`
     : '';
 
-  return `<g class="d-node" opacity="0">${shape}${iconEl}${labelEls}${subEl}${classEl}</g>`;
+  const delay = (typeof idx !== 'number' ? 0 : idx * 0.07).toFixed(2);
+  return `<g class="d-node" style="animation-delay:${delay}s">${shape}${iconEl}${labelEls}${subEl}${classEl}</g>`;
 }
 
 function verticalEdge(x1, y1, x2, y2, label, bidirectional, color) {
   const c = color || '#6b6b8a';
   const mid = (y1 + y2) / 2;
   const arrow = bidirectional
-    ? `<polygon points="${x2},${y2} ${x2-5},${y2-10} ${x2+5},${y2-10}" fill="${c}" opacity="0.7"/>
-       <polygon points="${x1},${y1} ${x1-5},${y1+10} ${x1+5},${y1+10}" fill="${c}" opacity="0.7"/>`
-    : `<polygon points="${x2},${y2} ${x2-5},${y2-10} ${x2+5},${y2-10}" fill="${c}" opacity="0.7"/>`;
+    ? `<polygon points="${x2},${y2} ${x2-5},${y2-10} ${x2+5},${y2-10}" fill="${c}" opacity="0.8"/>
+       <polygon points="${x1},${y1} ${x1-5},${y1+10} ${x1+5},${y1+10}" fill="${c}" opacity="0.8"/>`
+    : `<polygon points="${x2},${y2} ${x2-5},${y2-10} ${x2+5},${y2-10}" fill="${c}" opacity="0.8"/>`;
 
   const labelY = mid + 4;
   const labelEl = label
-    ? `<text x="${x1 + 8}" y="${labelY}" fill="${c}" font-family="IBM Plex Mono,monospace" font-size="10" opacity="0.8">${label}</text>`
+    ? `<text x="${x1 + 8}" y="${labelY}" fill="${c}" font-family="IBM Plex Mono,monospace" font-size="10" opacity="0.85">${label}</text>`
     : '';
 
-  const pathId = `edge-${x1}-${y1}-${x2}-${y2}`;
   return `
-    <path id="${pathId}" d="M${x1},${y1} L${x1},${mid} L${x2},${mid} L${x2},${y2}"
-          stroke="${c}" stroke-width="1.5" fill="none" stroke-dasharray="6 4" opacity="0.7"/>
     <path d="M${x1},${y1} L${x1},${mid} L${x2},${mid} L${x2},${y2}"
-          stroke="${c}" stroke-width="1.5" fill="none" class="edge-path" opacity="0.35"/>
+          stroke="${c}" stroke-width="1.5" fill="none" class="edge-path" opacity="0.9"/>
     ${arrow}${labelEl}`;
 }
 
@@ -121,19 +119,17 @@ function horizontalEdge(x1, y1, x2, y2, label, bidirectional, color) {
   const c = color || '#6b6b8a';
   const mid = (x1 + x2) / 2;
   const arrow = bidirectional
-    ? `<polygon points="${x2},${y2} ${x2-10},${y2-5} ${x2-10},${y2+5}" fill="${c}" opacity="0.7"/>
-       <polygon points="${x1},${y1} ${x1+10},${y1-5} ${x1+10},${y1+5}" fill="${c}" opacity="0.7"/>`
-    : `<polygon points="${x2},${y2} ${x2-10},${y2-5} ${x2-10},${y2+5}" fill="${c}" opacity="0.7"/>`;
+    ? `<polygon points="${x2},${y2} ${x2-10},${y2-5} ${x2-10},${y2+5}" fill="${c}" opacity="0.8"/>
+       <polygon points="${x1},${y1} ${x1+10},${y1-5} ${x1+10},${y1+5}" fill="${c}" opacity="0.8"/>`
+    : `<polygon points="${x2},${y2} ${x2-10},${y2-5} ${x2-10},${y2+5}" fill="${c}" opacity="0.8"/>`;
 
   const labelEl = label
-    ? `<text x="${mid}" y="${y1 - 8}" text-anchor="middle" fill="${c}" font-family="IBM Plex Mono,monospace" font-size="10" opacity="0.8">${label}</text>`
+    ? `<text x="${mid}" y="${y1 - 8}" text-anchor="middle" fill="${c}" font-family="IBM Plex Mono,monospace" font-size="10" opacity="0.85">${label}</text>`
     : '';
 
   return `
     <path d="M${x1},${y1} L${mid},${y1} L${mid},${y2} L${x2},${y2}"
-          stroke="${c}" stroke-width="1.5" fill="none" stroke-dasharray="6 4" opacity="0.7"/>
-    <path d="M${x1},${y1} L${mid},${y1} L${mid},${y2} L${x2},${y2}"
-          stroke="${c}" stroke-width="1.5" fill="none" class="edge-path" opacity="0.35"/>
+          stroke="${c}" stroke-width="1.5" fill="none" class="edge-path" opacity="0.9"/>
     ${arrow}${labelEl}`;
 }
 
@@ -142,10 +138,8 @@ function bracketEdge(x1, y1, x2, y2, label, color) {
   const midY = (y1 + y2) / 2;
   return `
     <path d="M${x1},${y1} L${x1},${midY} L${x2},${midY} L${x2},${y2}"
-          stroke="${c}" stroke-width="1.5" fill="none" stroke-dasharray="6 4" opacity="0.7"/>
-    <path d="M${x1},${y1} L${x1},${midY} L${x2},${midY} L${x2},${y2}"
-          stroke="${c}" stroke-width="1.5" fill="none" class="edge-path" opacity="0.35"/>
-    ${label ? `<text x="${(x1+x2)/2}" y="${midY - 6}" text-anchor="middle" fill="${c}" font-family="IBM Plex Mono,monospace" font-size="10" opacity="0.8">${label}</text>` : ''}`;
+          stroke="${c}" stroke-width="1.5" fill="none" class="edge-path" opacity="0.9"/>
+    ${label ? `<text x="${(x1+x2)/2}" y="${midY - 6}" text-anchor="middle" fill="${c}" font-family="IBM Plex Mono,monospace" font-size="10" opacity="0.85">${label}</text>` : ''}`;
 }
 
 function edgeLabel(text, x, y, color) {
@@ -169,11 +163,12 @@ function rowBox(nodes, y, colors) {
 function Diagram(cfg) {
   const w = cfg.w || 560;
   const h = cfg.h || 440;
+  const PAD = 8; // padding so edges/nodes don't clip at boundaries
   const nodes = cfg.nodes || [];
   const edges = cfg.edges || [];
   const groups = cfg.groups || [];
 
-  let svg = `<svg class="diagram-svg" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+  let svg = `<svg class="diagram-svg" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="overflow:hidden;">
     <defs>${SVG_SHADOW}</defs>`;
 
   // Groups (background region labels)
@@ -218,9 +213,9 @@ function Diagram(cfg) {
     svg += `<text x="${n.x}" y="${n.y}" text-anchor="${n.align || 'middle'}" fill="${n.color || '#6b6b8a'}" font-family="IBM Plex Mono,monospace" font-size="${n.size || 11}" opacity="${n.opacity || 0.7}" ${n.bold ? 'font-weight="600"' : ''}>${n.label}</text>`;
   });
 
-  // Regular nodes
-  nodes.filter(n => n.type !== 'text').forEach(n => {
-    svg += nodeShape(n.type, n.x, n.y, n);
+  // Regular nodes — staggered entrance animation via inline style
+  nodes.filter(n => n.type !== 'text').forEach((n, i) => {
+    svg += nodeShape(n.type, n.x, n.y, n, i);
   });
 
   svg += '</svg>';
@@ -842,26 +837,29 @@ const DIAGRAMS = {
   }),
 
   dockerfile: Diagram({
-    w: 560, h: 360,
+    w: 560, h: 380,
     groups: [
-      { label: 'BUILD TIME', x: 8, y: 8, w: 544, h: 160, fill: 'rgba(124,107,255,0.04)', stroke: '#7c6bff', dash: true, color: '#7c6bff' },
-      { label: 'IMAGE (read-only)', x: 8, y: 182, w: 544, h: 170, fill: 'rgba(74,222,128,0.04)', stroke: '#4ade80', dash: true, color: '#4ade80' },
+      { label: 'BUILD TIME (read top to bottom)', x: 8, y: 8, w: 544, h: 158, fill: 'rgba(124,107,255,0.04)', stroke: '#7c6bff', dash: true, color: '#7c6bff' },
+      { label: 'IMAGE LAYERS (stacked, read-only)', x: 8, y: 182, w: 544, h: 190, fill: 'rgba(74,222,128,0.04)', stroke: '#4ade80', dash: true, color: '#4ade80' },
     ],
     nodes: [
-      { id: 'from',    type: 'cmd', x: 24,  y: 36, label: 'FROM',          sub: 'node:20-alpine', w: 130, h: 42 },
-      { id: 'workdir', type: 'cmd', x: 165, y: 36, label: 'WORKDIR',         sub: '/app',           w: 130, h: 42 },
-      { id: 'copy',    type: 'cmd', x: 306, y: 36, label: 'COPY',            sub: 'package*.json',  w: 130, h: 42 },
-      { id: 'run',     type: 'cmd', x: 447, y: 36, label: 'RUN',             sub: 'npm ci',         w: 90,  h: 42 },
-      { id: 'cmd',     type: 'cmd', x: 24,  y: 100, label: 'COPY . .',      sub: '',               w: 130, h: 42 },
-      { id: 'expose',  type: 'cmd', x: 165, y: 100, label: 'EXPOSE 3000',   sub: 'documents port', w: 130, h: 42 },
-      { id: 'start',   type: 'cmd', x: 306, y: 100, label: 'CMD',           sub: 'node server.js', w: 130, h: 42 },
-      { id: 'base',    type: 'container', x: 24,  y: 200, label: 'alpine base',       sub: '~5MB', w: 120, h: 50 },
-      { id: 'nodebin', type: 'container', x: 160, y: 200, label: 'node binary',        sub: '',      w: 120, h: 50 },
-      { id: 'npmlib',  type: 'container', x: 296, y: 200, label: 'npm packages',     sub: '',      w: 120, h: 50 },
-      { id: 'yourcode',type: 'container', x: 432, y: 200, label: 'your code',         sub: '',      w: 110, h: 50 },
+      // Row 1: build instructions
+      { id: 'from',    type: 'cmd', x: 24,  y: 36, label: 'FROM',        sub: 'node:20-alpine',    w: 130, h: 48 },
+      { id: 'workdir', type: 'cmd', x: 164, y: 36, label: 'WORKDIR',     sub: '/app',              w: 120, h: 48 },
+      { id: 'copy',    type: 'cmd', x: 294, y: 36, label: 'COPY',        sub: 'package*.json',     w: 120, h: 48 },
+      { id: 'run',     type: 'cmd', x: 424, y: 36, label: 'RUN',         sub: 'npm ci --prod',     w: 112, h: 48 },
+      // Row 2: more build + start
+      { id: 'cmd2',    type: 'cmd', x: 24,  y: 96, label: 'COPY . .',    sub: 'your source code',  w: 130, h: 48 },
+      { id: 'expose',  type: 'cmd', x: 164, y: 96, label: 'EXPOSE',     sub: '3000 (documents)',  w: 120, h: 48 },
+      { id: 'start',   type: 'cmd', x: 294, y: 96, label: 'CMD',        sub: 'node server.js',    w: 120, h: 48 },
+      // Image layers (stacked vertically, each builds on previous)
+      { id: 'base',    type: 'container', x: 24,  y: 196, label: '① alpine base',    sub: '~5MB OS',  w: 160, h: 48 },
+      { id: 'nodebin', type: 'container', x: 200, y: 196, label: '② node binary',    sub: '',         w: 150, h: 48 },
+      { id: 'npmlib',  type: 'container', x: 24,  y: 254, label: '③ npm packages',    sub: '',         w: 160, h: 48 },
+      { id: 'yourcode',type: 'container', x: 200, y: 254, label: '④ your code',      sub: '',         w: 150, h: 48 },
     ],
     edges: [
-      { from: 'from',    to: 'nodebin', color: '#6b6b8a' },
+      { from: 'base',    to: 'nodebin', label: 'builds on', color: '#6b6b8a' },
       { from: 'nodebin', to: 'npmlib',  color: '#6b6b8a' },
       { from: 'npmlib',  to: 'yourcode',color: '#6b6b8a' },
     ],
@@ -1052,11 +1050,11 @@ const DIAGRAMS = {
   scalesimple: Diagram({
     w: 560, h: 280,
     nodes: [
-      { id: 'cmd',  type: 'cmd',      x: 200, y: 20, label: '--scale api=3', sub: 'replicate the API', w: 160, h: 50 },
-      { id: 'a1',   type: 'container',x: 60,  y: 130, label: 'api-1', sub: 'Up', w: 130, h: 56 },
-      { id: 'a2',   type: 'container',x: 215, y: 130, label: 'api-2', sub: 'Up', w: 130, h: 56 },
-      { id: 'a3',   type: 'container',x: 370, y: 130, label: 'api-3', sub: 'Up', w: 130, h: 56 },
-      { id: 'warn', type: 'issue',    x: 140, y: 220, label: '⚠ compose has no built-in load balancer — add nginx upstream for real LB', sub: '', w: 280, h: 38 },
+      { id: 'cmd', type: 'cmd', x: 200, y: 20, label: '--scale api=3', sub: 'replicate the API', w: 160, h: 50 },
+      { id: 'a1',   type: 'container', x: 60,  y: 130, label: 'api-1', sub: 'Up', w: 130, h: 56 },
+      { id: 'a2',   type: 'container', x: 215, y: 130, label: 'api-2', sub: 'Up', w: 130, h: 56 },
+      { id: 'a3',   type: 'container', x: 370, y: 130, label: 'api-3', sub: 'Up', w: 130, h: 56 },
+      { id: 'warn', type: 'issue',    x: 24, y: 215, label: '⚠ No built-in load balancer — add nginx upstream', sub: 'for production traffic distribution', w: 440, h: 44 },
     ],
     edges: [
       { from: 'cmd', to: 'a1', color: '#7c6bff' },
@@ -1066,10 +1064,10 @@ const DIAGRAMS = {
   }),
 
   k8swhy: Diagram({
-    w: 560, h: 380,
+    w: 560, h: 400,
     groups: [
       { label: 'SINGLE SERVER (brittle)', x: 8, y: 8, w: 260, h: 160, fill: 'rgba(248,113,113,0.04)', stroke: '#f87171', dash: true, color: '#f87171' },
-      { label: 'KUBERNETES CLUSTER (resilient)', x: 8, y: 188, w: 544, h: 180, fill: 'rgba(124,107,255,0.04)', stroke: '#7c6bff', dash: true, color: '#7c6bff' },
+      { label: 'KUBERNETES CLUSTER (resilient)', x: 8, y: 188, w: 544, h: 200, fill: 'rgba(124,107,255,0.04)', stroke: '#7c6bff', dash: true, color: '#7c6bff' },
     ],
     nodes: [
       { id: 'ss',  type: 'server', x: 64, y: 30, label: 'Server 1', sub: 'if it dies → everything dies', w: 155, h: 54 },
@@ -1078,11 +1076,11 @@ const DIAGRAMS = {
       { id: 'n1',  type: 'server', x: 24,  y: 208, label: 'Node 1', sub: '', w: 100, h: 48 },
       { id: 'n2',  type: 'server', x: 145, y: 208, label: 'Node 2', sub: '', w: 100, h: 48 },
       { id: 'n3',  type: 'server', x: 266, y: 208, label: 'Node 3', sub: '', w: 100, h: 48 },
-      { id: 'p1',  type: 'container', x: 24,  y: 270, label: 'app-pod', sub: '', w: 90, h: 40 },
-      { id: 'p2',  type: 'container', x: 145, y: 270, label: 'app-pod', sub: '', w: 90, h: 40 },
-      { id: 'p3',  type: 'container', x: 266, y: 270, label: 'app-pod', sub: '', w: 90, h: 40 },
-      { id: 'pd',  type: 'db', x: 386, y: 270, label: 'db-pod', sub: '', w: 90, h: 40 },
-      { id: 'pd2', type: 'db', x: 420, y: 220, label: 'db-pod', sub: '', w: 90, h: 40 },
+      { id: 'p1',  type: 'container', x: 24,  y: 268, label: 'app-pod', sub: '', w: 90, h: 40 },
+      { id: 'p2',  type: 'container', x: 145, y: 268, label: 'app-pod', sub: '', w: 90, h: 40 },
+      { id: 'p3',  type: 'container', x: 266, y: 268, label: 'app-pod', sub: '', w: 90, h: 40 },
+      { id: 'pd',  type: 'db', x: 376, y: 268, label: 'db-pod', sub: '', w: 90, h: 40 },
+      { id: 'pd2', type: 'db', x: 376, y: 220, label: 'db-pod', sub: '', w: 90, h: 40 },
     ],
     edges: [
       { from: 'n1', to: 'p1', color: '#7c6bff' },

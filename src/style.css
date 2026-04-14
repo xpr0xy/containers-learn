@@ -277,31 +277,25 @@ footer {
 /* ── SVG Diagram ─────────────────────────────────────── */
 .diagram-svg { overflow: visible; }
 
-/* Entrance animations */
-.d-node { animation: d-enter 0.4s ease both; }
-.d-node:nth-child(1) { animation-delay: 0.05s; }
-.d-node:nth-child(2) { animation-delay: 0.12s; }
-.d-node:nth-child(3) { animation-delay: 0.19s; }
-.d-node:nth-child(4) { animation-delay: 0.26s; }
-.d-node:nth-child(5) { animation-delay: 0.33s; }
-.d-node:nth-child(6) { animation-delay: 0.40s; }
-.d-node:nth-child(7) { animation-delay: 0.47s; }
-.d-node:nth-child(8) { animation-delay: 0.54s; }
+/* Entrance animations — delay is set inline per node */
+.d-node {
+  animation: d-enter 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
 
 @keyframes d-enter {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 /* Edge animation */
 .edge-path {
-  stroke-dasharray: 6 4;
-  animation: d-flow 1.2s linear infinite;
+  stroke-dasharray: 8 5;
+  animation: d-flow 1.4s linear infinite;
   fill: none;
 }
 
 @keyframes d-flow {
-  to { stroke-dashoffset: -20; }
+  to { stroke-dashoffset: -26; }
 }
 
 /* ── Responsive ─────────────────────────────────────── */
