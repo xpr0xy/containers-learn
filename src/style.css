@@ -202,90 +202,16 @@ main {
 #viz-diagram {
   flex: 1;
   overflow: auto;
-  padding: 20px;
+  padding: 0;
   scrollbar-width: thin;
-}
-
-/* SVG Diagram styles */
-.diagram-wrap { width: 100%; }
-
-.layer {
-  margin-bottom: 20px;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--surface2);
-  transition: border-color 0.3s;
-}
-
-.layer.active { border-color: var(--accent); box-shadow: 0 0 20px rgba(124,107,255,0.15); }
-
-.layer-label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-  padding: 2px 8px;
-  border-radius: 4px;
-  display: inline-block;
-}
-
-.layer-label.internet { background: rgba(248,113,113,0.15); color: var(--red); }
-.layer-label.loadbalancer { background: rgba(251,191,36,0.15); color: var(--amber); }
-.layer-label.container { background: rgba(124,107,255,0.15); color: var(--accent); }
-.layer-label.data { background: rgba(74,222,128,0.15); color: var(--green); }
-.layer-label.server { background: rgba(96,165,250,0.15); color: var(--blue); }
-.layer-label.user { background: rgba(255,107,138,0.15); color: var(--accent2); }
-
-.box-row {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 4px;
+  align-items: center;
+  justify-content: center;
 }
 
-.box {
-  padding: 8px 14px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-weight: 500;
-  border: 1px solid;
-  cursor: default;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.box:hover { transform: translateY(-2px); }
-
-.box.nginx { background: rgba(0,163,137,0.1); border-color: #00a389; color: #00d4b4; }
-.box.app { background: rgba(124,107,255,0.12); border-color: rgba(124,107,255,0.4); color: #a89bff; }
-.box.db { background: rgba(248,113,113,0.1); border-color: rgba(248,113,113,0.4); color: #ff9999; }
-.box.redis { background: rgba(248,113,113,0.1); border-color: rgba(248,113,113,0.4); color: #ff9999; }
-.box.proxy { background: rgba(251,191,36,0.1); border-color: rgba(251,191,36,0.4); color: #fcd34d; }
-.box.k8s { background: rgba(58,135,204,0.12); border-color: rgba(58,135,204,0.4); color: #93b8e0; }
-.box.pod { background: rgba(124,107,255,0.15); border-color: rgba(124,107,255,0.5); color: #c4b5fd; }
-.box.user { background: rgba(255,107,138,0.1); border-color: rgba(255,107,138,0.4); color: #ff9faf; }
-.box.server { background: rgba(96,165,250,0.1); border-color: rgba(96,165,250,0.4); color: #93c5fd; }
-.box.cert { background: rgba(74,222,128,0.1); border-color: rgba(74,222,128,0.4); color: #86efac; }
-
-.arrow {
-  text-align: center;
-  color: var(--dim);
-  font-size: 18px;
-  padding: 2px 0;
-  letter-spacing: 4px;
-}
-
-.flow-tag {
-  display: inline-block;
-  font-size: 10px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 2px 6px;
-  color: var(--dim);
-  margin-top: 6px;
+#viz-diagram svg {
+  max-width: 100%;
+  max-height: 100%;
 }
 
 /* ── Explanation ────────────────────────────────────── */
@@ -346,6 +272,36 @@ footer {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 12px;
   color: var(--accent);
+}
+
+/* ── SVG Diagram ─────────────────────────────────────── */
+.diagram-svg { overflow: visible; }
+
+/* Entrance animations */
+.d-node { animation: d-enter 0.4s ease both; }
+.d-node:nth-child(1) { animation-delay: 0.05s; }
+.d-node:nth-child(2) { animation-delay: 0.12s; }
+.d-node:nth-child(3) { animation-delay: 0.19s; }
+.d-node:nth-child(4) { animation-delay: 0.26s; }
+.d-node:nth-child(5) { animation-delay: 0.33s; }
+.d-node:nth-child(6) { animation-delay: 0.40s; }
+.d-node:nth-child(7) { animation-delay: 0.47s; }
+.d-node:nth-child(8) { animation-delay: 0.54s; }
+
+@keyframes d-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Edge animation */
+.edge-path {
+  stroke-dasharray: 6 4;
+  animation: d-flow 1.2s linear infinite;
+  fill: none;
+}
+
+@keyframes d-flow {
+  to { stroke-dashoffset: -20; }
 }
 
 /* ── Responsive ─────────────────────────────────────── */
