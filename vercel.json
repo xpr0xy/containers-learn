@@ -1,0 +1,6 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "github": { "enabled": true, "autoAlias": true },
+  "alias": ["containers.pr0xy.dev"]
+}

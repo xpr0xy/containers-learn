@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Container School — Learn Docker, Compose & K8s</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☸</text></svg>" />
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">◈ <span>Container School</span></div>
+    <div class="nav-tabs">
+      <button class="tab active" data-tab="docker">Docker</button>
+      <button class="tab" data-tab="compose">Compose</button>
+      <button class="tab" data-tab="kube">Kubernetes</button>
+      <button class="tab" data-tab="prod">Production</button>
+    </div>
+    <div class="nav-progress">
+      <span id="step-indicator">Step 1 / 6</span>
+      <div class="progress-bar"><div id="progress-fill"></div></div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Left: Terminal -->
+    <section class="panel terminal-panel">
+      <div class="panel-header">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        <span class="panel-title" id="terminal-title">Terminal — Docker</span>
+      </div>
+      <div id="terminal-output"></div>
+      <div class="terminal-input-row">
+        <span class="prompt">$</span>
+        <span id="current-cmd" class="cmd-display"></span>
+        <span class="cursor-blink">█</span>
+      </div>
+    </section>
+
+    <!-- Right: Visual / Explanation -->
+    <section class="panel viz-panel">
+      <div class="panel-header">
+        <span class="panel-title" id="viz-title">What just happened</span>
+      </div>
+      <div id="viz-diagram"></div>
+      <div id="viz-explanation"></div>
+    </section>
+  </main>
+
+  <footer>
+    <button id="btn-prev" disabled>← Back</button>
+    <div class="footer-center">
+      <span id="concept-name"></span>
+    </div>
+    <button id="btn-next">Next →</button>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
